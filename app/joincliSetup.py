@@ -2,6 +2,7 @@ import urllib.request, json, sys, os, argparse, re
 import urllib.parse, socket, requests
 import joincliUtils as ju
 
+
 def arguments():
     ap = argparse.ArgumentParser()
     ap.add_argument("-ak", "--apikey", help="Your api key, get it at ...", type=ju.api_regex)
@@ -11,6 +12,7 @@ def arguments():
                     type=ju.str2bool, nargs="?", const=True, default=False)
 
     return vars(ap.parse_args())
+
 
 def open_remote_devices(apikey):
     try:
@@ -30,9 +32,10 @@ def open_remote_devices(apikey):
         print("Are you connected to the internet?")
         print("Check your connection and try again")
         sys.exit(1)
-    
+
+
 def setup_devices(arguments, device):
-    #If devices.json already exists
+    # If devices.json already exists
     if device is not None:
         if arguments["update"]:
             update_devices(device)
@@ -55,7 +58,7 @@ def setup_devices(arguments, device):
             #TODO Add another fields if needed
             print(item["deviceName"])
 
-        pref = input("Choose the prefered device: ")
+        pref = 'Redmi7' # input("Choose the prefered device: ")
         while pref not in device_data:
             print("Device not listed as registered, try again:")
             pref = input("Choose the prefered device: ")
@@ -70,7 +73,6 @@ def setup_devices(arguments, device):
         print("Device data gattered sussesfully!")
         sys.exit(1)
 
-    
     else:
         print("Error returned from server: ",data['errorMessage'])
         print("Are you sure your API key is correct?")
@@ -99,11 +101,12 @@ def update_devices(device):
         print("Device data updated sussesfully!")
         sys.exit(1)
 
+
 def register_new_device(device):
     url = "https://joinjoaomgcd.appspot.com/_ah/api/registration/v1/registerDevice/"
     headers = {'content-type': 'application/json'}
-    port = input("Which port should I listen to? [Default: 1820]") or "1820"
-    name = input("Name this device: [Default: %s]" % socket.gethostname()) or socket.gethostname()
+    port = "1820"
+    name = 'heroku_app'
         
     print("Obtaining IP address...")
     ip_local = socket.gethostbyname(socket.gethostname()) + ":" + port
@@ -134,7 +137,6 @@ def register_new_device(device):
     print(response["errorMessage"])
 
     update_devices(device)
-    
 
 
 if __name__ == "__main__":
@@ -156,7 +158,3 @@ if __name__ == "__main__":
         register_new_device(devices)
     else:
         print("No arguments!")
-
-       
-    
-    

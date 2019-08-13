@@ -1,0 +1,36 @@
+{
+    "Chrome": {
+        "deviceId": "747eaee05cc3430792bf8b84c4cb765e",
+        "deviceType": 3
+    },
+    "ChromeMac": {
+        "deviceId": "ea2b95d05726484a90a5b32ca2942d41",
+        "deviceType": 3
+    },
+    "ChromeWin10": {
+        "deviceId": "84b1b2c5bd204d4db63869cfac5708f6",
+        "deviceType": 3
+    },
+    "Redmi7": {
+        "deviceId": "d787eea93be448d3bd1b15f997707cb8",
+        "deviceType": 1
+    },
+    "apikey": "08d95c381a05473ead45a0ad0e3f8468",
+    "chrome home win10": {
+        "deviceId": "d62bf02cc6014230a0a5c629cd21e35d",
+        "deviceType": 3
+    },
+    "chrome-home": {
+        "deviceId": "db557d9751db440aa72bd76c1451e06b",
+        "deviceType": 3
+    },
+    "heroku_app": {
+        "deviceId": "7522bda1b86f4a1f9895d276d97a6a8f",
+        "deviceType": 13
+    },
+    "pref": "Redmi7",
+    "quasimodo": {
+        "deviceId": "6c0c11ab753c427e811f2799fef0120e",
+        "deviceType": 13
+    }
+}

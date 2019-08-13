@@ -1,52 +1,96 @@
-# joinCLI
+# Template for hosting python scripts and applications on Heroku
 
-This is as linux client for the [Join app](https://joaoapps.com/join/).
+This is a small example of running your script with
+[Heroku](https://www.heroku.com/). You can run almost any python application
+with any dependencies.
 
-Please read the section "What this repo contains", **please**.
+## Getting Started
 
-Instructions:
+1. Download or clone this repository
+2. Register on [Heroku](https://www.heroku.com/)
+3. Download and install [Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
+4. Download and install [git](https://git-scm.com/downloads)
+5. Copy your script or project to this repository's folder
+6. Replace "script.py" with the path to your main executable file in `Procfile`
 
-```shell
-$ git clone https://github.com/timoteohss/joincli.git
-$ cd joincli
-$ python3 joincliSetup.py -ak <YOUR_API_KEY>
-$ python3 joincliSetup.py -re
->Follow instructions, use port 1820 for now
-```
+   ```procfile
+   worker: python script.py
+   ```
 
-## Listening for pushes:
-```shell
-$ python3 joincliServer.py
-```
+   > If you are getting errors, you can try replace `worker` with `web`.
+7. You may select your python version and runtime using `runtime.txt`. Read
+   how on [official heroku page](https://devcenter.heroku.com/articles/python-runtimes#selecting-a-runtime).
+8. If you are using any not built-in modules, you must add them to your
+   `requirements.txt`. To check which version of the module you have, run
+   `pip freeze` in the terminal. You will get lines with information about
+   installed modules and their versions in the format like
+   `MODULE_NAME==MODULE_VERSION`. Add lines with required modules and their
+   versions to your `requirements.txt`. Don't keep unused modules in
+   `requirements.txt`. This file should contain every module your application
+   needs. Heroku will install modules from this file automatically.
+9. Open terminal (or do it another way, but I will explain how to do it in
+   the terminal on Ubuntu) and create a git repository.
+   1. Initiate git repository
 
-You should have the server running listening on port 1820.
-If you want to have it working from external (outside your LAN) sources, open the port 1820 on your router.
+      ```bash
+      git init
+      ```
 
-Hack away the funcion `handleMessage` on joincliHandler.py to do your bidding, included is a very, very crute implementation os clipboard setting and any URL opening pushed from your devices, also notifications.
+   2. Create heroku application
 
-Not working with Chrome pushes tho, figures.
+      ```bash
+      heroku create
+      ```
 
-## Pushing:
-```shell
-$ joincli.py [-h] [-ti] TITLE [-te] TEXT [-fi] FIND [-mv] MEDIAVOLUME
-```
+   3. Add, commit and push your code into branch `master` of the
+      remote `heroku`.
 
-It should work with any device, for now tho youre pushing only for your prefered device you have chosen on setup.
+      ```bash
+      git add .
+      git commit -m "initial commit"
+      git push heroku master
+      ```
 
-## Dependencies:
-```
-python3
-pyperclip (if you want the clipboard working hasslefree)
-```
+10. Specify the amount of worker that will run your application
 
+    ```bash
+    heroku ps:scale worker=1
+    ```
 
+11. Now everything should be working. You can check your logs with this command
 
-Pre-pre-alpha description, full on documentation "comming soon"™.
+    ```bash
+    heroku logs --tail
+    ```
 
-# What this repo contains:
+12. You can open the URL where the script is deployed using the below
+    command (if you are deploying web application)
 
-1. Spaghetti v0.01 code
-2. Rushed methods
-  * ~~pls fork and help me~~
+    ```bash
+    heroku open
+    ```
 
-MIT license
+13. From now on you can use usual git commands (push, add, commit, etc.)
+    to update your app. Every time you `push heroku master` your
+    app gets redeployed with updated source code
+
+14. To stop your application scale down the amount of workers with like this
+
+     ```bash
+    heroku ps:scale worker=0
+    ```
+
+### Prerequisites
+
+* [Heroku CLI](https://devcenter.heroku.com/articles/getting-started-with-python#set-up)
+* [git](https://git-scm.com/downloads)
+
+## Authors
+
+* @michaelkrukov - https://michaelkrukov.ru/
+
+## Acknowledgments
+
+* [Official guide to deploy app](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
+* [Official guide about worker](https://devcenter.heroku.com/articles/background-jobs-queueing)
+* [Guided "Simple twitter-bot with Python, Tweepy and Heroku"](http://briancaffey.github.io/2016/04/05/twitter-bot-tutorial.html)
