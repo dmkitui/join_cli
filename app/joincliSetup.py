@@ -65,12 +65,13 @@ def setup_devices(arguments, device):
 
         device_data["pref"] = pref
 
-        data = json.dumps(device_data, sort_keys=True, indent=4)
+        # data = json.dumps(device_data, sort_keys=True, indent=4)
 
-        with open("devices.json","w") as f:
-            f.write(str(data))
+        ju.save_devices(device_data, 'setup')
+        # with open("devices.json","w") as f:
+        #     f.write(str(data))
 
-        print("Device data gattered sussesfully!")
+        print("Device data gathered sussesfully!")
         sys.exit(1)
 
     else:
@@ -95,9 +96,10 @@ def update_devices(device):
         device_data["pref"] = device["pref"]
 
         data = json.dumps(device_data, sort_keys=True, indent=4)
-
-        with open("devices.json","w") as f:
-            f.write(str(data))
+        #
+        # with open("devices.json","w") as f:
+        #     f.write(str(data))
+        ju.save_devices(device_data, 'register')
 
         print("Device data updated sussesfully!")
         sys.exit(1)
@@ -107,7 +109,7 @@ def register_new_device(device):
     url = "https://joinjoaomgcd.appspot.com/_ah/api/registration/v1/registerDevice/"
     headers = {'content-type': 'application/json'}
     port = "1820"
-    name = 'heroku_app_new'
+    name = 'hosted_app'
         
     print("Obtaining IP address...")
     ip_local = socket.gethostbyname(socket.gethostname()) + ":" + port

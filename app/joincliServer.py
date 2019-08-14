@@ -27,32 +27,35 @@ class webServer(Handler):
         data_str = ju.decode_UTF8(data).replace("'", '"') #Get data from POST
         data = json.loads(json.loads(data_str)['json'])['push'] #dict this bitch
         s = json.dumps(data, sort_keys=True, indent=4)
-        print(s) #print shit to be done
+        print(s)
         handleMessage(data)
             
     def do_GET(self):
+        print('IN GET Method!!!!')
         self.send_response(403)
         self.end_headers()
     
     def do_OPTIONS(self):
         self.send_response(200, "ok")
-        self.send_header('Access-Control-Allow-Credentials', 'false')
-        self.send_header('Access-Control-Allow-Origin', 'http://localhost:1820')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header("Access-Control-Allow-Headers", "X-Requested-With, Content-type")
 
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept') # This is the thing!!!!
+        self.send_header('Content-Type', 'text/json')
+        self.end_headers()
 
 def run(server_class=Handler, handler_class=webServer, port=PORT):
     try:
         logging.info("Listening on port %d for clients..." % port)
-        server_address = ('',port)
-        httpd = socketserver.TCPServer(server_address,handler_class)
+        server_address = ('', port)
+        httpd = socketserver.TCPServer(server_address, handler_class)
         httpd.serve_forever()
     except KeyboardInterrupt:
         handleMessage(False)
         httpd.server_close()
         logger.info("Server terminated.")
     except Exception as e:
+        print('SERVER ERROR: ', e)
         handleMessage(False)
         logger.error(str(e), exc_info=True)
         exit(1)

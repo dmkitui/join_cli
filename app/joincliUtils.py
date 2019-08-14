@@ -1,4 +1,8 @@
-import re, argparse, json
+import re, argparse, json, os
+import pymongo
+
+MONGO_URI = os.environ['MONGO_URI']
+DB_NAME = os.environ['DB_NAME']
 
 def api_regex(s, pat=re.compile(r"\w{32}")):
     if not pat.match(s):
@@ -14,12 +18,33 @@ def str2bool(arg):
         raise argparse.ArgumentTypeError('Boolean value expected!')
 
 def open_local_devices():
+    print('Did we get here?')
     try:
-        with open("devices.json","r") as deviceJSON:
-            device_data_old = json.loads(deviceJSON.read())
-            return device_data_old
+        client = pymongo.MongoClient(MONGO_URI)
+        db = client[DB_NAME]
+        print('XXXXX: ', db.devices.find_one())
+
+        return db.devices.find_one()
+        # with open("devices.json", "r") as deviceJSON:
+        #     device_data_old = json.loads(deviceJSON.read())
+        #     return device_data_old
     except:
         return None
+
+
+def  save_devices(data, operation):
+    try:
+        client = pymongo.MongoClient(MONGO_URI)
+        db = client[DB_NAME]
+        print('DATA TO BE SAVED: ', data)
+        if operation == 'setup':
+            db.devices.save(data)
+        elif operation == 'register':
+            db.devices.update({}, data)
+
+    except Exception as e:
+        print('Error on saving: ', e)
+
 
 def decode_UTF8(data):
     try:
