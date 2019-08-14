@@ -16,8 +16,9 @@ def arguments():
     
     return vars(ap.parse_args())
 
-def push_to_device(arguments,devices):
-    #print(arguments)
+
+def push_to_device(arguments, devices):
+    print(arguments)
     arguments["apikey"] = devices["apikey"]
     arguments["deviceId"] = devices[devices["pref"]]["deviceId"]
 
@@ -46,4 +47,4 @@ def devices():
     return deviceData
 
 
-push_to_device(arguments(),devices())
+push_to_device(arguments(), devices())

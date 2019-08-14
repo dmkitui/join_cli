@@ -21,6 +21,9 @@ import json, subprocess, pyperclip, webbrowser, sys
 
 
 def handleMessage(message):
+    print('Handling messages.....what the heck!!!')
+    print('Message: ', message)
+
     if message is False:
         subprocess.Popen(['notify-send','JoinCLI server died',
                         'Restart daemon to continue listening'])
@@ -41,4 +44,3 @@ def handleMessage(message):
         subprocess.Popen(['notify-send','Opening page:', message['url']])
         webbrowser.open_new_tab(message['url'])
 
-        

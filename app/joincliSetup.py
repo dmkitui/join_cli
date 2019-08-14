@@ -78,6 +78,7 @@ def setup_devices(arguments, device):
         print("Are you sure your API key is correct?")
         sys.exit(1)
 
+
 def update_devices(device):
     devices_update = open_remote_devices(device["apikey"])
 
@@ -106,7 +107,7 @@ def register_new_device(device):
     url = "https://joinjoaomgcd.appspot.com/_ah/api/registration/v1/registerDevice/"
     headers = {'content-type': 'application/json'}
     port = "1820"
-    name = 'heroku_app'
+    name = 'heroku_app_new'
         
     print("Obtaining IP address...")
     ip_local = socket.gethostbyname(socket.gethostname()) + ":" + port
