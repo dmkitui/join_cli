@@ -25,8 +25,9 @@ def handleMessage(message):
     print('Message: ', message)
 
     if message is False:
-        subprocess.Popen(['notify-send','JoinCLI server died',
-                        'Restart daemon to continue listening'])
+        # subprocess.Popen(['notify-send','JoinCLI server died',
+        #                 'Restart daemon to continue listening'])
+        print('Restart daemon to continue listening')
         sys.exit(1)
     
     if 'files' in message:

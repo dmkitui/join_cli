@@ -3,6 +3,7 @@ import json
 import urllib.request
 import urllib.parse
 import os
+import joincliUtils as ju
 import socket
 import requests
 
@@ -37,14 +38,14 @@ def push_to_device(arguments, devices):
     
 def devices():
     try:  # loads device json into a dictionary
-        with open("devices.json", "r") as device:
-            deviceData = json.loads(device.read())
+        device_data = ju.open_local_devices()
+
     except:
         #TODO move into main and check for devices
         os.system("python3 joincliSetup.py")
-        with open("devices.json", "r") as device:
-            deviceData = json.loads(device.read())
-    return deviceData
+        device_data = ju.open_local_devices()
+
+    return device_data
 
 
 push_to_device(arguments(), devices())
