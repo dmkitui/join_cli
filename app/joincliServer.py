@@ -1,6 +1,7 @@
 import http.server
 import socketserver
 import json
+import os
 import logging
 from joincliHandler import handleMessage
 import joincliUtils as ju
@@ -12,7 +13,7 @@ logging.basicConfig()
 devices = ju.open_local_devices()
 
 Handler = http.server.SimpleHTTPRequestHandler
-PORT = 1820
+PORT = int(os.environ.get('PORT', 1820))
 
 
 class webServer(Handler):
@@ -46,7 +47,7 @@ class webServer(Handler):
 
 def run(server_class=Handler, handler_class=webServer, port=PORT):
     try:
-        logging.info("Listening on port %d for clients..." % port)
+        print("Listening on port %d for clients..." % port)
         server_address = ('', port)
         httpd = socketserver.TCPServer(server_address, handler_class)
         httpd.serve_forever()
